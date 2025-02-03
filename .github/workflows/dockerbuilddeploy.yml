@@ -8,21 +8,29 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and Push MySQL Image
         run: |
-          docker build -t mysql-repo -f mysql/Dockerfile .
-          docker tag mysql-repo:latest ${{ 008819936420 }}.dkr.ecr.${{ us-east-1 }}.amazonaws.com/mysql-repo:latest
-          docker push ${{ 008819936420 }}.dkr.ecr.${{ us-east-1 }}.amazonaws.com/mysql-repo:latest
+          docker build -t mysql-repo -f Dockerfile_sql .
+          docker tag mysql-repo:latest ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/mysql-repo:latest
+          docker push ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/mysql-repo:latest
 
       - name: Build and Push WebApp Image
         run: |
-          docker build -t webapp-repo -f app/Dockerfile .
-          docker tag webapp-repo:latest ${{ 008819936420 }}.dkr.ecr.${{ us-east-1 }}.amazonaws.com/webapp-repo:latest
-          docker push ${{ 008819936420 }}.dkr.ecr.${{ us-east-1 }}.amazonaws.com/webapp-repo:latest
+          docker build -t webapp-repo -f Dockerfile .
+          docker tag webapp-repo:latest ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/webapp-repo:latest
+          docker push ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/webapp-repo:latest
