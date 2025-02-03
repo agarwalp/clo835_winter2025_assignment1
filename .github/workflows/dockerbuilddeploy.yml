@@ -26,11 +26,11 @@ jobs:
       - name: Build and Push MySQL Image
         run: |
           docker build -t mysql-repo -f Dockerfile_sql .
-          docker tag mysql-repo:latest ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/mysql-repo:latest
-          docker push ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/mysql-repo:latest
+          docker tag mysql-repo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql-repo:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mysql-repo:latest
 
       - name: Build and Push WebApp Image
         run: |
           docker build -t webapp-repo -f Dockerfile .
-          docker tag webapp-repo:latest ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/webapp-repo:latest
-          docker push ${{ secrets.008819936420 }}.dkr.ecr.${{ secrets.us-east-1 }}.amazonaws.com/webapp-repo:latest
+          docker tag webapp-repo:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webapp-repo:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webapp-repo:latest
