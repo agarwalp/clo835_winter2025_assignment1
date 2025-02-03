@@ -41,5 +41,5 @@ jobs:
           ECR_REPOSITORY: mysql-repo
           IMAGE_TAG: v0.1
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile_sql .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile_mysql .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
