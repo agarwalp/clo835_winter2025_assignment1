@@ -1,5 +1,12 @@
+# Use the official MySQL 8.0 image
 FROM mysql:8.0
 
-COPY ./mysql.sql /tmp
+# Set MySQL root password and default database
+ENV MYSQL_ROOT_PASSWORD=pw
+ENV MYSQL_DATABASE=employees
 
-CMD [ "mysqld", "--init-file=/tmp/mysql.sql" ]
+# Copy initialization script to the correct directory
+COPY ./mysql.sql /docker-entrypoint-initdb.d/
+
+# Expose MySQL default port
+EXPOSE 3306
