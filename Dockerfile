@@ -1,11 +1,17 @@
 FROM ubuntu:20.04
 
+# Set environment variables to disable interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install required system dependencies
 RUN apt-get update -y && apt-get install -y \
     python3-pip \
     python3-dev \
     mysql-client \
     libmysqlclient-dev \
+    libssl-dev \
+    libffi-dev \
+    build-essential \
     && apt-get clean
 
 # Set working directory
