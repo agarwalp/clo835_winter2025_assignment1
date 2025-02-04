@@ -1,14 +1,25 @@
 FROM ubuntu:20.04
 
-RUN apt-get update -y
-COPY . /app
+# Install required system dependencies
+RUN apt-get update -y && apt-get install -y \
+    python3-pip \
+    python3-dev \
+    mysql-client \
+    libmysqlclient-dev \
+    && apt-get clean
+
+# Set working directory
 WORKDIR /app
-RUN set -xe \
-    && apt-get update -y \
-    && apt-get install -y python3-pip \
-    && apt-get install -y mysql-client 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+
+# Copy the application files
+COPY . .
+
+# Upgrade pip and install dependencies
+RUN pip3 install --upgrade pip
+RUN pip3 install -r requirements.txt
+
+# Expose the application port
 EXPOSE 8080
-ENTRYPOINT [ "python3" ]
-CMD [ "app.py" ]
+
+# Start the Flask application
+CMD ["python3", "app.py"]
