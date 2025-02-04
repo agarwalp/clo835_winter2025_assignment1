@@ -92,7 +92,7 @@ def FetchData():
     emp_id = request.form.get('emp_id')
 
     if not emp_id:
-        print("No Employee ID provided")
+        print(" No Employee ID provided")
         return render_template("getempoutput.html", id="N/A", fname="N/A",
                                lname="N/A", interest="N/A", location="N/A", color=color_codes[COLOR])
 
@@ -104,7 +104,7 @@ def FetchData():
             result = cursor.fetchone()
 
         if not result:
-            print("Employee not found")
+            print(" Employee not found")
             return render_template("getempoutput.html", id="N/A", fname="N/A",
                                    lname="N/A", interest="N/A", location="N/A", color=color_codes[COLOR])
 
