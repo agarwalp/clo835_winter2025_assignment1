@@ -1,31 +1,14 @@
+
 FROM ubuntu:20.04
-
-# Set environment variables to disable interactive prompts
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install required system dependencies
-RUN apt-get update -y && apt-get install -y \
-    python3-pip \
-    python3-dev \
-    mysql-client \
-    libmysqlclient-dev \
-    libssl-dev \
-    libffi-dev \
-    build-essential \
-    && apt-get clean
-
-# Set working directory
+RUN apt-get update -y
+COPY . /app
 WORKDIR /app
-
-# Copy the application files
-COPY . .
-
-# Upgrade pip and install dependencies
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
-
-# Expose the application port
+RUN set -xe \
+    && apt-get update -y \
+    && apt-get install -y python3-pip \
+    && apt-get install -y mysql-client 
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 EXPOSE 8080
-
-# Start the Flask application
-CMD ["python3", "app.py"]
+ENTRYPOINT [ "python3" ]
+CMD [ "app.py" ]
